@@ -1,0 +1,5 @@
+{
+  "name": "Pathfinding Battle: Human vs Algorithm",
+  "description": "A competitive educational game where a human player races against pathfinding algorithms (BFS, DFS, Dijkstra, A*) to find a hidden goal on a grid.",
+  "requestFramePermissions": []
+}
