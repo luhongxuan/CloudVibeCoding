@@ -192,6 +192,12 @@ const App: React.FC = () => {
     frontier: new Set(), 
     path: [] 
   };
+  
+  // Calculate final results for display
+  const finalAlgoStep = algoHistory[algoHistory.length - 1];
+  const algoPathLength = (algoFinished || winner === 'ALGORITHM') && finalAlgoStep?.path 
+    ? finalAlgoStep.path.length 
+    : 'N/A';
 
   // Convert Algo Path array to Set for O(1) rendering
   const algoPathSet = new Set<string>();
@@ -380,7 +386,7 @@ const App: React.FC = () => {
                   visited={currentAlgoStep.visited}
                   frontier={currentAlgoStep.frontier}
                   path={algoPathSet}
-                  revealGoal={true}
+                  revealGoal={gameStatus === 'FINISHED'}
                   recursionDepth={currentAlgoStep.depth}
                 />
                 {/* Legend Overlay */}
@@ -423,7 +429,7 @@ const App: React.FC = () => {
                   <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
                     <h4 className="font-bold text-slate-500 text-xs uppercase mb-1">{selectedAlgo} Path</h4>
                     <p className="text-2xl font-bold text-purple-600">
-                      {currentAlgoStep.path ? currentAlgoStep.path.length : 'N/A'} <span className="text-sm text-slate-400 font-normal">steps</span>
+                      {algoPathLength} <span className="text-sm text-slate-400 font-normal">steps</span>
                     </p>
                   </div>
                 </div>
