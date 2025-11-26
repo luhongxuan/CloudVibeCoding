@@ -194,9 +194,15 @@ const App: React.FC = () => {
   };
   
   // Calculate final results for display
-  const finalAlgoStep = algoHistory[algoHistory.length - 1];
-  const algoPathLength = (algoFinished || winner === 'ALGORITHM') && finalAlgoStep?.path 
-    ? finalAlgoStep.path.length 
+  // We search the history for the step containing the path. 
+  // In DFS (and potentially others), the step with the path might not be the absolute last step 
+  // due to backtracking visualization frames pushed after finding the goal.
+  const stepWithPath = algoHistory.find(s => s.path && s.path.length > 0);
+  const showAlgoStats = gameStatus === 'FINISHED' || algoFinished || winner === 'ALGORITHM';
+  
+  // Path length is nodes - 1 (edges/steps). If path is empty or 1 node, steps are 0.
+  const algoPathLength = showAlgoStats && stepWithPath 
+    ? Math.max(0, stepWithPath.path!.length - 1)
     : 'N/A';
 
   // Convert Algo Path array to Set for O(1) rendering
